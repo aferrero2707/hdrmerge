@@ -65,7 +65,7 @@ Terminal=false
 Categories=Graphics;
 MimeType=image/x-dcraw;image/x-adobe-dng;
 EOF
-sed -i -e "s|LOWERAPP|$LOWERAPP|g" $LOWERAPP.desktop
+sed -i -e "s|LOWERAPP|$PREFIX/$LOWERAPP|g" $LOWERAPP.desktop
 sed -i -e "s|ICON|$TRAVIS_BUILD_DIR/$LOWERAPP.png|g" $LOWERAPP.desktop
 cat $LOWERAPP.desktop
 
