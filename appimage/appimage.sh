@@ -32,12 +32,51 @@ rm -rf out $APP
 
 WD=$(pwd)
 
-PREFIX=/app
+PREFIX=/zyx
 export PATH=$PREFIX/bin:$PATH
 export LD_LIBRARY_PATH=$PREFIX/lib:$LD_LIBRARY_PATH
 export XDG_DATA_DIRS=$PREFIX/share:$XDG_DATA_DIRS
 export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH
 
+
+#exit
+
+cd $PREFIX
+
+#cp ./usr/share/applications/$LOWERAPP.desktop .
+#sed -i -e "s|gimp-2.9|$LOWERAPP|g" $LOWERAPP.desktop
+rm -rf ./usr/share/icons/48x48/apps || true
+cp $TRAVIS_BUILD_DIR/images/icon.png $LOWERAPP.png
+
+# The original desktop file is a bit strange, hence we provide our own
+cat > $LOWERAPP.desktop <<\EOF
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=HDRMerge AppImage
+GenericName=HDR raw image merge
+GenericName[es]=Mezcla de imágenes HDR raw
+Comment=Merge several raw images into a single DNG raw image with high dynamic range.
+Comment[es]=Mezcla varias imágenes raw en una única imagen DNG raw de alto rango dinámico.
+Exec=LOWERAPP %f
+TryExec=LOWERAPP
+Icon=LOWERAPP
+Terminal=false
+Categories=Graphics;
+MimeType=image/x-dcraw;image/x-adobe-dng;
+EOF
+sed -i -e "s|LOWERAPP|$LOWERAPP|g" $LOWERAPP.desktop
+
+unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
+cd $TRAVIS_BUILD_DIR
+export VERSION=$(git rev-parse --short HEAD) # linuxdeployqt uses this for naming the file
+mkdir -p /ai && cd /ai
+wget https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
+chmod +x linuxdeployqt-continuous-x86_64.AppImage
+./linuxdeployqt-continuous-x86_64.AppImage $PREFIX/$LOWERAPP.desktop  -bundle-non-qt-libs
+./linuxdeployqt-continuous-x86_64.AppImage $PREFIX/$LOWERAPP.desktop  -appimage
+
+exit
 
 pwd
 
@@ -64,31 +103,7 @@ sed -i -e "s|LOWERAPP|$LOWERAPP|g" usr/bin/$LOWERAPP
 chmod u+x usr/bin/$LOWERAPP
 
 
-#cp ./usr/share/applications/$LOWERAPP.desktop .
-#sed -i -e "s|gimp-2.9|$LOWERAPP|g" $LOWERAPP.desktop
-rm -rf ./usr/share/icons/48x48/apps || true
-cp $TRAVIS_BUILD_DIR/images/icon.png hdrmerge.png
-
 get_apprun
-
-# The original desktop file is a bit strange, hence we provide our own
-cat > $LOWERAPP.desktop <<\EOF
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=HDRMerge AppImage
-GenericName=HDR raw image merge
-GenericName[es]=Mezcla de imágenes HDR raw
-Comment=Merge several raw images into a single DNG raw image with high dynamic range.
-Comment[es]=Mezcla varias imágenes raw en una única imagen DNG raw de alto rango dinámico.
-Exec=LOWERAPP %f
-TryExec=LOWERAPP
-Icon=LOWERAPP
-Terminal=false
-Categories=Graphics;
-MimeType=image/x-dcraw;image/x-adobe-dng;
-EOF
-sed -i -e "s|LOWERAPP|$LOWERAPP|g" $LOWERAPP.desktop
 
 mkdir -p usr/lib/qt4/plugins
 cp -a /usr/lib/x86_64-linux-gnu/qt4/plugins/* usr/lib/qt4/plugins
