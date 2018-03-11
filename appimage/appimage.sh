@@ -60,12 +60,14 @@ Comment=Merge several raw images into a single DNG raw image with high dynamic r
 Comment[es]=Mezcla varias imágenes raw en una única imagen DNG raw de alto rango dinámico.
 Exec=LOWERAPP %f
 TryExec=LOWERAPP
-Icon=LOWERAPP
+Icon=ICON
 Terminal=false
 Categories=Graphics;
 MimeType=image/x-dcraw;image/x-adobe-dng;
 EOF
 sed -i -e "s|LOWERAPP|$LOWERAPP|g" $LOWERAPP.desktop
+sed -i -e "s|ICON|$TRAVIS_BUILD_DIR/$LOWERAPP|g" $LOWERAPP.desktop
+cat $LOWERAPP.desktop
 
 unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
 cd $TRAVIS_BUILD_DIR
