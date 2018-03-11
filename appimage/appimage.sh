@@ -41,7 +41,7 @@ export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH
 
 #exit
 
-cd $PREFIX
+cd $TRAVIS_BUILD_DIR
 
 #cp ./usr/share/applications/$LOWERAPP.desktop .
 #sed -i -e "s|gimp-2.9|$LOWERAPP|g" $LOWERAPP.desktop
@@ -70,11 +70,11 @@ sed -i -e "s|LOWERAPP|$LOWERAPP|g" $LOWERAPP.desktop
 unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
 cd $TRAVIS_BUILD_DIR
 export VERSION=$(git rev-parse --short HEAD) # linuxdeployqt uses this for naming the file
-mkdir -p /ai && cd /ai
+#mkdir -p /ai && cd /ai
 wget https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
 chmod +x linuxdeployqt-continuous-x86_64.AppImage
-./linuxdeployqt-continuous-x86_64.AppImage $PREFIX/$LOWERAPP.desktop  -bundle-non-qt-libs
-./linuxdeployqt-continuous-x86_64.AppImage $PREFIX/$LOWERAPP.desktop  -appimage
+./linuxdeployqt-continuous-x86_64.AppImage $LOWERAPP.desktop  -bundle-non-qt-libs
+./linuxdeployqt-continuous-x86_64.AppImage $LOWERAPP.desktop  -appimage
 
 exit
 
