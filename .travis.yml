@@ -33,14 +33,11 @@ before_script:
     #- autoconf
     - pwd
     - ls
-    - ./configure --prefix=/zyx
-    - make -j2
-    - sudo make install
+    - ./configure --prefix=/usr
+    - make DESTDIR=$TRAVIS_BUILD_DIR/appdir -j2 install
     - cd ..
-    - rm -rf LibRaw
-    - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/zyx ..
-    - make -j2
-    - sudo make install
+    - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr ..
+    - make DESTDIR=$TRAVIS_BUILD_DIR/appdir -j2 install
     - cd ..
 
 script:

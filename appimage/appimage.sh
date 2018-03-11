@@ -46,14 +46,14 @@ cd $TRAVIS_BUILD_DIR
 #cp ./usr/share/applications/$LOWERAPP.desktop .
 #sed -i -e "s|gimp-2.9|$LOWERAPP|g" $LOWERAPP.desktop
 rm -rf ./usr/share/icons/48x48/apps || true
-cp $TRAVIS_BUILD_DIR/images/icon.png $LOWERAPP.png
+cp $TRAVIS_BUILD_DIR/images/icon.png appdir/usr/share/icons/$LOWERAPP.png
 
 # The original desktop file is a bit strange, hence we provide our own
-cat > $LOWERAPP.desktop <<\EOF
+cat > appdir/usr/share/applications/$LOWERAPP.desktop <<\EOF
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=HDRMerge AppImage
+Name=hdrmerge
 GenericName=HDR raw image merge
 GenericName[es]=Mezcla de imágenes HDR raw
 Comment=Merge several raw images into a single DNG raw image with high dynamic range.
@@ -65,9 +65,9 @@ Terminal=false
 Categories=Graphics;
 MimeType=image/x-dcraw;image/x-adobe-dng;
 EOF
-sed -i -e "s|LOWERAPP|$PREFIX/$LOWERAPP|g" $LOWERAPP.desktop
-sed -i -e "s|ICON|$TRAVIS_BUILD_DIR/$LOWERAPP.png|g" $LOWERAPP.desktop
-cat $LOWERAPP.desktop
+sed -i -e "s|LOWERAPP|$LOWERAPP|g" appdir/usr/share/applications/$LOWERAPP.desktop
+sed -i -e "s|ICON|$LOWERAPP.png|g" appdir/usr/share/applications/$LOWERAPP.desktop
+cat appdir/usr/share/applications/$LOWERAPP.desktop
 
 unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
 cd $TRAVIS_BUILD_DIR
@@ -75,8 +75,8 @@ export VERSION=$(git rev-parse --short HEAD) # linuxdeployqt uses this for namin
 #mkdir -p /ai && cd /ai
 wget https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
 chmod +x linuxdeployqt-continuous-x86_64.AppImage
-./linuxdeployqt-continuous-x86_64.AppImage $LOWERAPP.desktop  -bundle-non-qt-libs
-./linuxdeployqt-continuous-x86_64.AppImage $LOWERAPP.desktop  -appimage
+./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/$LOWERAPP.desktop -bundle-non-qt-libs
+./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/$LOWERAPP.desktop -appimage
 
 exit
 
