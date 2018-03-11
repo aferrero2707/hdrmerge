@@ -69,7 +69,7 @@ Categories=Graphics;
 MimeType=image/x-dcraw;image/x-adobe-dng;
 EOF
 sed -i -e "s|LOWERAPP|$LOWERAPP|g" appdir/usr/share/applications/$LOWERAPP.desktop
-sed -i -e "s|ICON|$LOWERAPP.png|g" appdir/usr/share/applications/$LOWERAPP.desktop
+sed -i -e "s|ICON|$LOWERAPP|g" appdir/usr/share/applications/$LOWERAPP.desktop
 cat appdir/usr/share/applications/$LOWERAPP.desktop
 
 unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
