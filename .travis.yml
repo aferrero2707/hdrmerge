@@ -34,7 +34,8 @@ before_script:
     - pwd
     - ls
     - ./configure --prefix=/usr
-    - make DESTDIR=$TRAVIS_BUILD_DIR/appdir -j2 install
+    - make -j2
+    - sudo make install
     - cd ..
     - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr ..
     - make DESTDIR=$TRAVIS_BUILD_DIR/appdir -j2 install
