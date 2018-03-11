@@ -81,6 +81,10 @@ chmod +x linuxdeployqt-continuous-x86_64.AppImage
 ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/$LOWERAPP.desktop -bundle-non-qt-libs
 ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/$LOWERAPP.desktop -appimage
 
+find . -name "hdrmerge*.AppImage"
+transfer hdrmerge*.AppImage
+echo "AppImage has been uploaded to the URL above; use something like GitHub Releases for permanent storage"
+
 exit
 
 pwd
