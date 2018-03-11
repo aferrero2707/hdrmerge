@@ -66,7 +66,7 @@ Categories=Graphics;
 MimeType=image/x-dcraw;image/x-adobe-dng;
 EOF
 sed -i -e "s|LOWERAPP|$LOWERAPP|g" $LOWERAPP.desktop
-sed -i -e "s|ICON|$TRAVIS_BUILD_DIR/$LOWERAPP|g" $LOWERAPP.desktop
+sed -i -e "s|ICON|$TRAVIS_BUILD_DIR/$LOWERAPP.png|g" $LOWERAPP.desktop
 cat $LOWERAPP.desktop
 
 unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
