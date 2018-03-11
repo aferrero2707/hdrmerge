@@ -43,6 +43,9 @@ export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH
 
 cd $TRAVIS_BUILD_DIR
 
+mkdir -p appdir/usr/share/icons
+mkdir -p appdir/usr/share/applications
+
 #cp ./usr/share/applications/$LOWERAPP.desktop .
 #sed -i -e "s|gimp-2.9|$LOWERAPP|g" $LOWERAPP.desktop
 rm -rf ./usr/share/icons/48x48/apps || true
